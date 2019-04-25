@@ -8,7 +8,7 @@ namespace WeatherStation.Listener
     static class Program
     {
         //todo: Выделить в отдельный класс? Bootstrap?
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //todo: Слишком много всего
             Console.WriteLine("Available ports: ");
@@ -39,31 +39,13 @@ namespace WeatherStation.Listener
 
         private static void ListenerMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            string[] rawData = e.Message.Split('\t');
-
-            var sensorData = new SensorData
+            if (SensorData.TryParse(e.Message, out var result))
             {
-                ReceiveDate = DateTime.Now,
-                Humidity = ToFloat(rawData[0]),
-                Temperature = ToFloat(rawData[1]),
-            };
+                var writer = new SqliteWriter();
+                writer.Insert(result);
 
-            var writer = new SqliteWriter();
-
-            writer.Insert(sensorData);
-
-            Console.WriteLine(e.Message);
-        }
-
-        //todo: Валидация данных
-        private static float ToFloat(string text)
-        {
-            if (float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out float value))
-            {
-                return value;
+                Console.WriteLine(e.Message);
             }
-
-            return 0;
         }
 
         private static void ErrorMessageReceived(object sender, ErrorEventArgs e)
