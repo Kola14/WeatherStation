@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO.Ports;
 using WeatherStation.Storage;
 
@@ -7,9 +6,14 @@ namespace WeatherStation.Listener
 {
     static class Program
     {
+        private static ISensorDataRepository repository;
+
         //todo: Выделить в отдельный класс? Bootstrap?
         public static void Main(string[] args)
         {
+            repository = new SensorDataRepository("sensors.db");
+            repository.Initilize();
+
             //todo: Слишком много всего
             Console.WriteLine("Available ports: ");
 
@@ -41,8 +45,7 @@ namespace WeatherStation.Listener
         {
             if (SensorData.TryParse(e.Message, out var result))
             {
-                var writer = new SqliteWriter();
-                writer.Insert(result);
+                repository.Add(result);
 
                 Console.WriteLine(e.Message);
             }

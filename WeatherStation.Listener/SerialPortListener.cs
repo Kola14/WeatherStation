@@ -8,9 +8,7 @@ namespace WeatherStation.Listener
     public class SerialPortListener
     {
         private readonly string portName;
-
         private readonly int baudRate;
-
         private readonly SerialPort serialPort;
 
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;

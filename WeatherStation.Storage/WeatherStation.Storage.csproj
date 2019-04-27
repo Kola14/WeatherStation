@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISensorDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SensorData.cs" />
-    <Compile Include="SqliteWriter.cs" />
+    <Compile Include="SensorDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

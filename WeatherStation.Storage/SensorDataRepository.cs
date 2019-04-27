@@ -3,22 +3,27 @@ using System.IO;
 
 namespace WeatherStation.Storage
 {
-    //todo: Rename to Repository?
-    public class SqliteWriter
+    public class SensorDataRepository : ISensorDataRepository
     {
-        public SqliteWriter()
-        {
-            if (!File.Exists("Database.sqlite"))
-            {
-                SQLiteConnection.CreateFile("Database.sqlite");
+        private readonly string filePath;
+        private readonly string connectionString;
 
-                Setup();
-            }
+        public SensorDataRepository(string filePath)
+        {
+            this.filePath = filePath;
+            connectionString = $"Data Source={filePath};";
         }
 
-        public void Setup()
+        public void Initilize()
         {
-            using (var connection = new SQLiteConnection("Data Source=Database.sqlite;"))
+            if (File.Exists(filePath))
+            {
+                return;
+            }
+
+            SQLiteConnection.CreateFile(filePath);
+
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
@@ -29,16 +34,16 @@ namespace WeatherStation.Storage
                                    Humidity FLOAT
                                );";
 
-                using(var command = new SQLiteCommand(query, connection))
+                using (var command = new SQLiteCommand(query, connection))
                 {
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        public void Insert(SensorData data)
+        public void Add(SensorData data)
         {
-            using (var connection = new SQLiteConnection("Data Source=Database.sqlite;"))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
