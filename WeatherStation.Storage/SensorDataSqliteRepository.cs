@@ -1,17 +1,19 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Data.SQLite;
 using System.IO;
 
 namespace WeatherStation.Storage
 {
-    public class SensorDataRepository : ISensorDataRepository
+    public class SensorDataSqliteRepository : ISensorDataRepository
     {
         private readonly string filePath;
         private readonly string connectionString;
 
-        public SensorDataRepository(string filePath)
+        public SensorDataSqliteRepository(string filePath)
         {
-            this.filePath = filePath;
-            connectionString = $"Data Source={filePath};";
+            this.filePath = Environment.ExpandEnvironmentVariables(filePath);
+
+            connectionString = $"Data Source={this.filePath};";
         }
 
         public void Initilize()

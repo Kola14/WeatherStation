@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Ports;
 using WeatherStation.Storage;
 
@@ -10,17 +11,17 @@ namespace WeatherStation.Listener
         {
             string portName = GetPortName();
 
-            var repository = new SensorDataRepository("sensors.db");
+            var repository = new SensorDataSqliteRepository("%homepath%/sensors.db");
             repository.Initilize();
 
             var listener = new SerialPortListener(portName, 9600);
 
-            var bootrapper = new Bootstrapper(listener, repository);
-            bootrapper.Start();
+            var bootstrapper = new Bootstrapper(listener, repository);
+            bootstrapper.Start();
 
             Console.ReadLine();
 
-            bootrapper.Stop();
+            bootstrapper.Stop();
         }
 
         private static string GetPortName()
