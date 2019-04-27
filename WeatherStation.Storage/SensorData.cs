@@ -8,12 +8,12 @@ namespace WeatherStation.Storage
         /// <summary>
         /// Температура
         /// </summary>
-        public float Temperature { get; set; }
+        public double Temperature { get; set; }
 
         /// <summary>
         /// Влажность воздуха
         /// </summary>
-        public float Humidity { get; set; }
+        public double Humidity { get; set; }
 
         /// <summary>
         /// Дата получения

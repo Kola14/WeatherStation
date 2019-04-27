@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
@@ -60,6 +61,36 @@ namespace WeatherStation.Storage
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public SensorData[] All()
+        {
+            var result = new List<SensorData>();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT ReceiveDate, Temperature, Humidity FROM SensorData";
+
+                using (var command = new SQLiteCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var sensorData = new SensorData
+                        {
+                            ReceiveDate = (DateTime) reader["ReceiveDate"],
+                            Temperature = (double) reader["Temperature"],
+                            Humidity = (double) reader["Humidity"]
+                        };
+
+                        result.Add(sensorData);
+                    }
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }

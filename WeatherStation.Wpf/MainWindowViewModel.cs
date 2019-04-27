@@ -1,5 +1,6 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using WeatherStation.Storage;
@@ -31,6 +32,8 @@ namespace WeatherStation.Wpf
             var repository = new SensorDataSqliteRepository("%homepath%/sensors.db");
             repository.Initilize();
 
+            var data = repository.All();
+
             this.repository = repository;
 
             SeriesCollection = new SeriesCollection
@@ -38,12 +41,12 @@ namespace WeatherStation.Wpf
                 new LineSeries
                 {
                     Title = "Humidity",
-                    Values = new ChartValues<double> { 4, 6, 5, 2 ,7 }
+                    Values = new ChartValues<double>(data.Select(x => x.Humidity))
                 },
                 new LineSeries
                 {
                     Title = "Temperature",
-                    Values = new ChartValues<double> { 6, 7, 3, 4 ,6 }
+                    Values = new ChartValues<double>(data.Select(x => x.Temperature))
                 }
             };
 
