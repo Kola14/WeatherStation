@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ErrorEventArgs.cs" />
+    <Compile Include="ErrorOccurredEventArgs.cs" />
     <Compile Include="ISerialPortListener.cs" />
     <Compile Include="MessageReceivedEventArgs.cs" />
     <Compile Include="Program.cs" />
