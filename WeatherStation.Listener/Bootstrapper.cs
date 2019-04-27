@@ -15,7 +15,7 @@ namespace WeatherStation.Listener
             this.repository = repository;
 
             listener.MessageReceived += ListenerMessageReceived;
-            listener.Error += ErrorMessageReceived;
+            listener.ErrorOccurred += ListenerErrorOccurred;
         }
 
         public void Start()
@@ -38,7 +38,7 @@ namespace WeatherStation.Listener
             }
         }
 
-        private void ErrorMessageReceived(object sender, ErrorEventArgs e)
+        private void ListenerErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             Console.WriteLine(e.Message);
         }

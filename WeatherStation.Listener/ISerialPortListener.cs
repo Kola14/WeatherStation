@@ -4,7 +4,7 @@ namespace WeatherStation.Listener
 {
     public interface ISerialPortListener
     {
-        event EventHandler<ErrorEventArgs> Error;
+        event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
         event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
         void Start();

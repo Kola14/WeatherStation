@@ -13,7 +13,7 @@ namespace WeatherStation.Listener
 
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
-        public event EventHandler<ErrorEventArgs> Error;
+        public event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         public SerialPortListener(string portName, int baudRate)
         {
@@ -42,7 +42,7 @@ namespace WeatherStation.Listener
             }
             catch(IOException ex)
             {
-                Error?.Invoke(this, new ErrorEventArgs(ex.Message));
+                ErrorOccurred?.Invoke(this, new ErrorOccurredEventArgs(ex.Message));
             }
         }
 

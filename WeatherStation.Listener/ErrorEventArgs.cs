@@ -2,11 +2,11 @@
 
 namespace WeatherStation.Listener
 {
-    public class ErrorEventArgs: EventArgs
+    public class ErrorOccurredEventArgs: EventArgs
     {
         public string Message { get; }
 
-        public ErrorEventArgs(string message)
+        public ErrorOccurredEventArgs(string message)
         {
             Message = message;
         }
