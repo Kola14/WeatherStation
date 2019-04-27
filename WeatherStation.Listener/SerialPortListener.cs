@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace WeatherStation.Listener
 {
-    public class SerialPortListener
+    public class SerialPortListener : ISerialPortListener
     {
         private readonly string portName;
         private readonly int baudRate;

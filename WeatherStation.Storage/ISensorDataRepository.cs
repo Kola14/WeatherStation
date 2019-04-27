@@ -2,8 +2,6 @@
 {
     public interface ISensorDataRepository
     {
-        void Initilize();
-
         void Add(SensorData data);
     }
 }
